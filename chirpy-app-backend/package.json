@@ -1,0 +1,32 @@
+{
+  "name": "chirpy-app-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "dev": "nodemon src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bohdana Zhuk",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "auto-bind": "^4.0.0",
+    "console-stamp": "^3.0.2",
+    "crypto": "^1.0.1",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.13.1",
+    "koa-async-validator": "^0.4.1",
+    "koa-body": "^4.2.0",
+    "koa-passport": "^4.1.4",
+    "koa-router": "^10.0.0",
+    "mongoose": "^5.12.9",
+    "mongoose-autopopulate": "^0.14.0",
+    "nodejs-base64-converter": "^1.0.5",
+    "nodemon": "^2.0.7",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
+  }
+}
