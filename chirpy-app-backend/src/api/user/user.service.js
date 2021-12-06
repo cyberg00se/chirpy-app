@@ -52,7 +52,7 @@ class UserService extends ApiService {
   async setUserPassword(user, password) {
     if (password) {
       user.salt = await bcrypt.genSalt(10);
-      user.passwordHash = bcrypt.hash(password, user.salt);
+      user.passwordHash = await bcrypt.hash(password, user.salt);
     } else {
       user.salt = undefined;
       user.passwordHash = undefined;
