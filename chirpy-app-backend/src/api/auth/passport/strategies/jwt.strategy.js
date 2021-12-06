@@ -1,6 +1,6 @@
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const User = require("../user.model.link");
+const UserService = require("../user.service.link");
 const passportOptions = require("../../options");
 
 let options = {
@@ -8,17 +8,21 @@ let options = {
   secretOrKey: passportOptions.jwt.secret,
 };
 
-let handler = (payload, done) => {
-  User.findById(payload.id, (err, user) => {
-    if (err) {
-      return done(err);
-    }
-    if (user) {
-      done(null, user);
-    } else {
-      done(null, false);
-    }
-  });
+let handler = async function(payload, done) {
+  const userService = new UserService();
+  let user;
+  try {
+    user = await userService.findById(payload.id);
+  }
+  catch(err) {
+    return done(err);
+  }
+
+  if (user) {
+    return done(null, user);
+  } else {
+    return done(null, false);
+  }
 };
 
 module.exports = new JwtStrategy(options, handler);

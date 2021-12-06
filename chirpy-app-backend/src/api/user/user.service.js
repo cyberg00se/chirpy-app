@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const User = require("./models/User");
 const {ApiService} = require("../api.service");
 
@@ -48,9 +49,24 @@ class UserService extends ApiService {
     });
   }
 
-  async updateUserPassword(user, password) {
-    user.password = password;
-    return await user.save();
+  async setUserPassword(user, password) {
+    if (password) {
+      user.salt = crypto.randomBytes(128).toString("base64");
+      user.passwordHash = crypto.pbkdf2Sync(password, user.salt, 1, 128, "sha256");
+    } else {
+      user.salt = undefined;
+      user.passwordHash = undefined;
+    }
+    await user.save();
+    return user;
+  }
+  async hasPassword(user) {
+    return user.passwordHash != null && user.passwordHash.length > 0;
+  }
+  async verifyPassword(user, password) {
+    if (!password) return false;
+    if (!user.passwordHash) return false;
+    return crypto.pbkdf2Sync(password, user.salt, 1, 128, "sha256") == user.passwordHash;
   }
 
   async updateUser(user, form) {

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../user/models/User");
+const UserService = require("../user/user.service");
 const {ApiService} = require("../api.service");
 const {privateUserResponse} = require("../user/responses");
 const passportOptions = require("./options");
@@ -11,6 +12,7 @@ class AuthService extends ApiService {
   }
 
   async signUp(ctx) {
+    const userService = new UserService();
     const {
       name,
       surname,
@@ -23,10 +25,10 @@ class AuthService extends ApiService {
       name: name,
       surname: surname,
       userName: userName,
-      email: email,
-      password: password
+      email: email
     });
 
+    await userService.setUserPassword(user, password);
     await user.save();
     const token = this.generateJWTToken(user._id);
 

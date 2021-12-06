@@ -4,8 +4,6 @@ module.exports = {
 
     delete data.salt;
     delete data.passwordHash;
-    delete data.hasPassword;
-    delete data.password;
     delete data.auth;
 
     return data;

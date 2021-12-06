@@ -1,5 +1,5 @@
 const LocalStrategy = require("passport-local").Strategy;
-const User = require("../user.model.link");
+const UserService = require("../user.service.link");
 
 let options = {
   usernameField: "username",
@@ -7,19 +7,25 @@ let options = {
   session: false,
 };
 
-let handler = (userName, password, done) => {
-  User.findOne({userName}, (err, user) => {
-    if (err) {
-      return done(err);
-    }
+let handler = async function(userName, password, done) {
+  const userService = new UserService();
+  let user;
+  try {
+    user = await userService.findOne({userName});
     if (!user) {
       return done(null, false, {message: "Incorrect username."});
     }
-    if (!user.verifyPassword(password)) {
-      return done(null, false, {message: "Incorrect password."});
-    }
-    return done(null, user);
-  });
+  }
+  catch(err) {
+    return done(err);
+  }
+
+  let confirmed = await userService.verifyPassword(user, password);
+  if(!confirmed) {
+    return done(null, false, {message: "Incorrect password."});
+  }
+
+  return done(null, user);
 };
 
 module.exports = new LocalStrategy(options, handler);

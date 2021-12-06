@@ -31,10 +31,10 @@ class UserController extends ApiController {
   async updatePassword(ctx) {
     const {oldPassword, newPassword, confirmNewPassword} = ctx.request.body;
     const user = ctx.req.user;
-    if (user.hasPassword) {
-      if (user.verifyPassword(oldPassword)) {
+    if (this.userService.hasPassword(user)) {
+      if (this.userService.verifyPassword(user, oldPassword)) {
         if (newPassword.length > 0 && newPassword === confirmNewPassword) {
-          await this.userService.updateUserPassword(user, newPassword);
+          await this.userService.setUserPassword(user, newPassword);
           ctx.body = {status: "success"};
         } else {
           ctx.setAppError(400, 1);
@@ -44,7 +44,7 @@ class UserController extends ApiController {
       }
     } else {
       if (newPassword.length > 0 && newPassword === confirmNewPassword) {
-        await this.userService.updateUserPassword(user, newPassword);
+        await this.userService.setUserPassword(user, newPassword);
         ctx.body = {status: "success"};
       } else {
         ctx.setAppError(400, 1);
