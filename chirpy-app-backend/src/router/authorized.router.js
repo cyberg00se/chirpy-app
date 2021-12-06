@@ -6,6 +6,7 @@ const { PostsController } = require("../api/posts/posts.controller");
 
 //Middleware`s
 const AuthMiddleware = require("../api/auth/auth.middleware");
+const UserMiddleware = require("../api/user/user.middleware");
 const { PostsMiddleware } = require("../api/posts/posts.middleware");
 
 //Post initialization
@@ -21,7 +22,7 @@ router
   .get("/users/me", UserController.me)
   .get("/users/:id", UserController.getById)
   .post("/users/me", UserController.updateUser)
-  .post("/users/me/password", UserController.updatePassword)
+  .post("/users/me/password", UserMiddleware.validateNewPassword, UserController.updatePassword)
 
   //Posts
   .get("/posts", postsController.getUserPosts)

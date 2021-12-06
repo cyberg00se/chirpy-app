@@ -11,9 +11,10 @@ class AuthMiddleware extends ApiMiddleware {
   }
 
   async validateRegister (ctx, next) {
+    let regexString = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{10,25}$/;
     ctx.checkBody("email", "bad email").optional().isEmail();
     ctx.checkBody("userName", "bad username").notEmpty().len(2, 20);
-    ctx.checkBody("password").notEmpty().len(3, 20);
+    ctx.checkBody("password").matches(regexString);
     ctx.checkBody("name").optional().len(3, 20);
     ctx.checkBody("surname").optional().len(3, 20);
     let errors = await ctx.validationErrors();
