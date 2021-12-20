@@ -3,6 +3,7 @@ const autoPopulatePlugin = require("mongoose-autopopulate");
 const {db} = require("../config/default");
 
 mongoose.plugin(autoPopulatePlugin);
+mongoose.set('useFindAndModify', false);
 
 mongoose.connect(db.uri, {
   ...db.options

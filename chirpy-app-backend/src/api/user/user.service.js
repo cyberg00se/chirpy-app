@@ -13,6 +13,7 @@ class UserService extends ApiService {
       "bio",
       "userName",
       "email",
+      "phoneNumber",
     ];
   }
 

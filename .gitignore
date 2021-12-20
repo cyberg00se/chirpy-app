@@ -1,1 +1,2 @@
 chirpy-app-backend/node_modules/**
+.env

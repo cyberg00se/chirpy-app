@@ -1,4 +1,5 @@
 require("console-stamp")(console, { pattern: "dd.mm.yyyy HH:MM:ss.l" });
+require('dotenv').config();
 //require("./api/logger/dblog");
 const Koa = require("koa");
 const koaValidate = require("koa-async-validator");
