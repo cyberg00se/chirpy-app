@@ -58,5 +58,5 @@ console.info("Boot Up API");
 const port = config.app.port || 3000;
 httpServer.listen(port, () => {
   console.info("Started at: ", new Date());
-  console.info(`server start on ${config.app.domain}:${port} `);
+  console.info(`Server started on ${config.app.domain}:${port} `);
 });

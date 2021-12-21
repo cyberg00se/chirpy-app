@@ -19,7 +19,7 @@ module.exports = {
     plainCert: "",
     plainKey: "",
 
-    minVersion: "TLSv1.3",
+    minVersion: "TLSv1.2",
     maxVersion: "TLSv1.3",
 
     dhparam: "../secure/server/dhparam.pem",
