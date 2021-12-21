@@ -2,6 +2,7 @@ require("console-stamp")(console, { pattern: "dd.mm.yyyy HH:MM:ss.l" });
 require('dotenv').config();
 //require("./api/logger/dblog");
 const Koa = require("koa");
+const helmet = require("koa-helmet");
 const koaValidate = require("koa-async-validator");
 const cors = require("@koa/cors");
 const bodyParser = require("koa-body");
@@ -22,6 +23,7 @@ const router = require("./router");
 const mainMiddleware = require("./api/main/main.middleware");
 
 app
+  .use(helmet())
   .use(mainMiddleware.logger(":method :url"))
   .use(mainMiddleware.errorHandler)
   .use(mainMiddleware.setError)
